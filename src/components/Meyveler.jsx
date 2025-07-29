@@ -1,70 +1,11 @@
 import Meyve from "./Meyve";
-import { useReducer, useState } from "react";
-import { createNewID } from "./utils";
-
-const meyvelerReducer = (meyveler, { type, payload }) => {
-  switch (type) {
-    case "add": {
-      let id = createNewID(meyveler) + 1;
-      return [...meyveler, { ...payload, id: id }];
-    }
-    case "delete": {
-      return meyveler.filter((meyve) => meyve.id !== payload?.id);
-    }
-    case "edit": {
-      return meyveler.map((meyve) => {
-        if (meyve.id == payload?.id) {
-          return { ...meyve, isim: payload.yeniMeyve };
-        }
-        return meyve;
-      });
-    }
-  }
-};
+import { useContext, useState } from "react";
+import { TumMeyvelerContext } from "./TumMeyvelerContext";
+import { DispatchContext } from "./DispatchContext";
 
 export default function Meyveler() {
-  const [tumMeyveler, dispatch] = useReducer(meyvelerReducer, [
-    {
-      id: 0,
-      backColor: "white",
-      src: "./src/assets/apple.png",
-      width: "20px",
-      height: 30,
-      isim: "Elma",
-      cizili: false,
-      gizli: false,
-    },
-    {
-      id: 1,
-      backColor: "green",
-      src: "./src/assets/pear.png",
-      width: "20px",
-      height: 30,
-      isim: "Armut",
-      cizili: false,
-      gizli: false,
-    },
-    {
-      id: 2,
-      backColor: "red",
-      src: "./src/assets/banana.png",
-      width: "20px",
-      height: 30,
-      isim: "Muz",
-      cizili: false,
-      gizli: false,
-    },
-    {
-      id: 3,
-      backColor: "magenta",
-      src: "./src/assets/cherries.png",
-      width: "20px",
-      height: 30,
-      isim: "Kiraz",
-      cizili: false,
-      gizli: false,
-    },
-  ]);
+  const tumMeyveler = useContext(TumMeyvelerContext);
+  const dispatch = useContext(DispatchContext);
 
   const handleEkle = (e) => {
     e.stopPropagation();
