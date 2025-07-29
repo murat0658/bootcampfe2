@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { LevelContext } from "./LevelContext";
 
-function Frame(props) {
+function Frame({ children }) {
+  const level = useContext(LevelContext);
   return (
     <div
       className="card"
@@ -11,7 +13,7 @@ function Frame(props) {
         borderWidth: 3,
       }}
     >
-      {props.children}
+      <LevelContext value={level + 1}>{children}</LevelContext>
     </div>
   );
 }

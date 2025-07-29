@@ -3,7 +3,7 @@ import React from "react";
 import Meyveler from "./components/Meyveler";
 import Frame from "./components/Frame";
 import { useState } from "react";
-
+import Header from "./components/Header";
 function Counter(props) {
   const [counter, setCounter] = useState(0);
   return (
@@ -32,9 +32,25 @@ function Component() {
 function App() {
   return (
     <div>
-      <Component />
       <Frame>
-        <Meyveler />
+        <Header>Header</Header>
+        <Header>Header</Header>
+        <Header>Header</Header>
+        <Frame>
+          <Header>Sub Header</Header>
+          <Header> Sub Header</Header>
+          <Header>Sub Header</Header>
+          <Frame>
+            <Header>Sub Sub Header</Header>
+            <Header>Sub Sub Header</Header>
+            <Header>Sub Sub Header</Header>
+            <Frame>
+              <Header>Sub Sub Sub Header</Header>
+              <Header>Sub Sub Sub Header</Header>
+              <Header>Sub Sub Sub Header</Header>
+            </Frame>
+          </Frame>
+        </Frame>
       </Frame>
     </div>
   );
