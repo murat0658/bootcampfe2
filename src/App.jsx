@@ -8,6 +8,8 @@ import { DispatchContext } from "./components/DispatchContext";
 import { createNewID } from "./components/utils";
 import Posts from "./components/Posts";
 import { useOnlineStatus } from "./components/StatusBar";
+import { useDispatch, useSelector } from "react-redux";
+import { decrementOne, increment, incrementOne, selector } from "./slice";
 function Counter(props) {
   const [counter, setCounter] = useState(0);
   return (
@@ -62,7 +64,10 @@ const meyvelerReducer = (meyveler, { type, payload }) => {
 };
 
 function App() {
-  const [tumMeyveler, dispatch] = useReducer(meyvelerReducer, [
+  const { value } = useSelector(selector);
+  const dispatch = useDispatch();
+
+  const [tumMeyveler, dispatch1] = useReducer(meyvelerReducer, [
     {
       id: 0,
       backColor: "white",
@@ -107,15 +112,25 @@ function App() {
 
   const isOnline = useOnlineStatus();
 
+  const [number, setNumber] = useState(0);
+
   return (
     <Frame>
-      <div>{isOnline ? "Online" : "Offline"}</div>
+      <div>{value}</div>
+      <button onClick={() => dispatch(incrementOne())}>Increment one</button>
+      <button onClick={() => dispatch(decrementOne())}>Decrement one</button>
+      <input
+        type="number"
+        onChange={(e) => setNumber(parseInt(e.target.value))}
+      />
+      <button onClick={() => dispatch(increment(number))}>Increment</button>
+      {/* <div>{isOnline ? "Online" : "Offline"}</div>
       <TumMeyvelerContext value={tumMeyveler}>
-        <DispatchContext value={dispatch}>
+        <DispatchContext value={dispatch1}>
           <Meyveler />
         </DispatchContext>
       </TumMeyvelerContext>
-      <Posts />
+      <Posts /> */}
     </Frame>
   );
 }
