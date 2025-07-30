@@ -1,23 +1,19 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
 import Frame from "./Frame";
+import { useDispatch, useSelector } from "react-redux";
+import { getPostsAction, selector } from "../slice";
 
 export default function Posts() {
-  const [posts, setPosts] = useState([]);
-
-  const f = async () => {
-    const response = await axios.get(
-      "https://jsonplaceholder.typicode.com/posts"
-    );
-    setPosts(response.data);
-  };
+  const { posts, loading } = useSelector(selector);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    f();
-  }, []);
+    dispatch(getPostsAction());
+  }, [dispatch]);
 
   return (
     <div>
+      {loading && <div>Loading</div>}
       {posts.map((post) => (
         <Frame key={post.id}>
           <div>
