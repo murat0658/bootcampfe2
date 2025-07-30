@@ -1,8 +1,21 @@
-import React from "react";
-function Meyve({ meyve, handleDelete }) {
-  const deleteMeyve = (meyveId) => {
-    handleDelete(meyveId);
+import React, { useContext } from "react";
+import { DispatchContext } from "./DispatchContext";
+function Meyve({ meyve }) {
+  const dispatch = useContext(DispatchContext);
+  const deleteMeyve = (id) => {
+    dispatch({ type: "delete", payload: { id } });
   };
+
+  const handleCiz = (id, cizili) => {
+    dispatch({
+      type: "ciz",
+      payload: {
+        id,
+        cizili,
+      },
+    });
+  };
+
   const { width, height, src, cizili, backColor } = meyve;
   const comp = (
     <li
@@ -21,7 +34,7 @@ function Meyve({ meyve, handleDelete }) {
           borderStyle: "solid",
         }}
       />
-      {meyve.isim}
+      <div onClick={() => handleCiz(meyve.id, !meyve.cizili)}>{meyve.isim}</div>
       <div onClick={() => deleteMeyve(meyve.id)}>X</div>
     </li>
   );

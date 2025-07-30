@@ -49,6 +49,14 @@ const meyvelerReducer = (meyveler, { type, payload }) => {
         return meyve;
       });
     }
+    case "ciz": {
+      return meyveler.map((meyve) => {
+        if (meyve.id == payload?.id) {
+          return { ...meyve, cizili: payload.cizili };
+        }
+        return meyve;
+      });
+    }
   }
 };
 
@@ -61,7 +69,7 @@ function App() {
       width: "20px",
       height: 30,
       isim: "Elma",
-      cizili: false,
+      cizili: true,
       gizli: false,
     },
     {

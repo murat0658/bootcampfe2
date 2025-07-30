@@ -36,10 +36,6 @@ export default function Meyveler() {
     });
   };
 
-  const handleDelete = (id) => {
-    dispatch({ type: "delete", payload: { id } });
-  };
-
   const [yeniMeyve, setYeniMeyve] = useState("");
   const [selected, setSelected] = useState("");
 
