@@ -6,7 +6,8 @@ import { useState, useReducer } from "react";
 import { TumMeyvelerContext } from "./components/TumMeyvelerContext";
 import { DispatchContext } from "./components/DispatchContext";
 import { createNewID } from "./components/utils";
-
+import Posts from "./components/Posts";
+import { useOnlineStatus } from "./components/StatusBar";
 function Counter(props) {
   const [counter, setCounter] = useState(0);
   return (
@@ -104,13 +105,17 @@ function App() {
     },
   ]);
 
+  const isOnline = useOnlineStatus();
+
   return (
     <Frame>
+      <div>{isOnline ? "Online" : "Offline"}</div>
       <TumMeyvelerContext value={tumMeyveler}>
         <DispatchContext value={dispatch}>
           <Meyveler />
         </DispatchContext>
       </TumMeyvelerContext>
+      <Posts />
     </Frame>
   );
 }

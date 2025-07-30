@@ -1,5 +1,5 @@
 import Meyve from "./Meyve";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { TumMeyvelerContext } from "./TumMeyvelerContext";
 import { DispatchContext } from "./DispatchContext";
 
@@ -39,6 +39,8 @@ export default function Meyveler() {
   const [yeniMeyve, setYeniMeyve] = useState("");
   const [selected, setSelected] = useState("");
 
+  const inputRef = useRef(null);
+
   const meyveler = tumMeyveler.filter((item) => !item.gizli);
 
   return (
@@ -51,15 +53,20 @@ export default function Meyveler() {
             onClick={() => setSelected(item.id)}
             name="abc"
           />
-          <Meyve
-            meyve={item}
-            key={item.id}
-            handleDelete={() => handleDelete(item.id)}
-          />
+          <Meyve meyve={item} key={item.id} />
         </>
       ))}
+      <button
+        onClick={() => {
+          inputRef.current.focus();
+        }}
+      >
+        Focus
+      </button>
+
       <form>
         <input
+          ref={inputRef}
           label="Eklenecek"
           value={yeniMeyve}
           onChange={(e) => setYeniMeyve(e.target.value)}
