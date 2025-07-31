@@ -1,18 +1,21 @@
 import Meyve from "./Meyve";
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { TumMeyvelerContext } from "./TumMeyvelerContext";
-import { DispatchContext } from "./DispatchContext";
+import { useDispatch, useSelector } from "react-redux";
+import { selector } from "../meyveSlice";
+import { add, edit } from "../meyveSlice";
+import { createNewID } from "./utils";
 
 export default function Meyveler() {
-  const tumMeyveler = useContext(TumMeyvelerContext);
-  const dispatch = useContext(DispatchContext);
+  const tumMeyveler = useSelector(selector).meyveler;
+  const dispatch = useDispatch();
 
   const handleEkle = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    dispatch({
-      type: "add",
-      payload: {
+    dispatch(
+      add({
+        id: createNewID(),
         isim: yeniMeyve,
         backColor: "white",
         src: "./src/assets/apple.png",
@@ -20,20 +23,19 @@ export default function Meyveler() {
         height: 30,
         cizili: false,
         gizli: false,
-      },
-    }),
-      setYeniMeyve("");
+      })
+    );
+    setYeniMeyve("");
   };
 
   const handleEdit = (e) => {
     e.preventDefault();
-    dispatch({
-      type: "edit",
-      payload: {
+    dispatch(
+      edit({
         id: selected,
         yeniMeyve,
-      },
-    });
+      })
+    );
   };
 
   const [yeniMeyve, setYeniMeyve] = useState("");

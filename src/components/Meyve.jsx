@@ -1,19 +1,10 @@
-import React, { useContext } from "react";
-import { DispatchContext } from "./DispatchContext";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { delet } from "../meyveSlice";
 function Meyve({ meyve }) {
-  const dispatch = useContext(DispatchContext);
+  const dispatch = useDispatch();
   const deleteMeyve = (id) => {
-    dispatch({ type: "delete", payload: { id } });
-  };
-
-  const handleCiz = (id, cizili) => {
-    dispatch({
-      type: "ciz",
-      payload: {
-        id,
-        cizili,
-      },
-    });
+    dispatch(delet(id));
   };
 
   const { width, height, src, cizili, backColor } = meyve;
@@ -34,7 +25,7 @@ function Meyve({ meyve }) {
           borderStyle: "solid",
         }}
       />
-      <div onClick={() => handleCiz(meyve.id, !meyve.cizili)}>{meyve.isim}</div>
+      <div> {meyve.isim}</div>
       <div onClick={() => deleteMeyve(meyve.id)}>X</div>
     </li>
   );
